@@ -1,54 +1,21 @@
-import { readFileSync, writeFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const ACTIVITY_FILE = join(__dirname, '../data/agentActivity.json');
-
 /**
- * Loads agent activity from JSON file
- * @returns {Array} Array of activity items
+ * Agent activity feed helpers, backed by the shared in-memory store.
  */
-export function loadActivity() {
-  try {
-    const data = readFileSync(ACTIVITY_FILE, 'utf-8');
-    return JSON.parse(data).activities;
-  } catch (error) {
-    console.error('Error loading agent activity:', error.message);
-    return [];
-  }
-}
+import { activityFeed, addActivity as storeAddActivity } from '../data/store.js';
 
 /**
- * Adds a new activity item to the feed
+ * Adds a new activity item to the feed (newest first, capped at 20).
  * @param {Object} activityItem - The activity item to add
  */
 export function addActivity(activityItem) {
-  try {
-    const activities = loadActivity();
-    // Add to beginning (newest first)
-    activities.unshift(activityItem);
-    // Keep only the most recent 20 items
-    const trimmedActivities = activities.slice(0, 20);
-    writeFileSync(
-      ACTIVITY_FILE,
-      JSON.stringify({ activities: trimmedActivities }, null, 2),
-      'utf-8'
-    );
-  } catch (error) {
-    console.error('Error adding activity:', error.message);
-  }
+  storeAddActivity(activityItem);
 }
 
 /**
- * Gets the activity feed for a user
- * @param {string} userId - User ID
+ * Gets the activity feed for a user.
+ * @param {string} _userId - User ID (single-user demo returns all activities)
  * @returns {Array} Array of activity items
  */
-export function getActivityFeed(userId) {
-  // In a real system, this would filter by userId
-  // For the demo, we return all activities
-  return loadActivity();
+export function getActivityFeed(_userId) {
+  return activityFeed;
 }

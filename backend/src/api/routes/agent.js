@@ -2,12 +2,7 @@ import express from 'express';
 import { getActivityFeed, addActivity } from '../../agent/activityFeed.js';
 import { createActivityItem, simulateVerification } from '../../agent/agentMonitor.js';
 import { generateTasksFromConfig } from '../../agent/taskGenerator.js';
-import { readFileSync, writeFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import { tasksData, managerConfig } from '../../data/store.js';
 
 const router = express.Router();
 
@@ -28,15 +23,12 @@ router.get('/activity/:userId', (req, res) => {
  */
 router.post('/trigger/:taskId', (req, res) => {
   const { taskId } = req.params;
-  const { action } = req.body;
 
   // Simulate verification
   const verification = simulateVerification(taskId);
 
-  // Create activity item
+  // Create activity item and add to feed
   const activityItem = createActivityItem(verification.message, verification.status);
-
-  // Add to feed
   addActivity(activityItem);
 
   res.json({
@@ -48,29 +40,24 @@ router.post('/trigger/:taskId', (req, res) => {
 
 /**
  * POST /api/agent/generate
- * Triggers task generation from manager config
+ * Triggers task generation from manager config (Claude API, seed fallback).
+ * Updates the in-memory task store in place.
  */
 router.post('/generate', async (req, res) => {
   try {
-    // Load manager config
-    const managerConfigPath = join(__dirname, '../../data/managerConfig.json');
-    const managerConfig = JSON.parse(readFileSync(managerConfigPath, 'utf-8'));
-
-    // Generate tasks
     const generatedTasks = await generateTasksFromConfig(managerConfig);
 
-    // Save to file
-    const tasksPath = join(__dirname, '../../data/generatedTasks.json');
-    writeFileSync(tasksPath, JSON.stringify(generatedTasks, null, 2), 'utf-8');
+    // Replace the in-memory task list in place so all routes see the update.
+    if (generatedTasks && Array.isArray(generatedTasks.tasks)) {
+      tasksData.tasks = generatedTasks.tasks;
+    }
 
-    // Add activity
-    const activityItem = createActivityItem('Generated personalized checklist', 'complete');
-    addActivity(activityItem);
+    addActivity(createActivityItem('Generated personalized checklist', 'complete'));
 
     res.json({
       success: true,
       message: 'Tasks generated successfully',
-      taskCount: generatedTasks.tasks.length,
+      taskCount: tasksData.tasks.length,
     });
   } catch (error) {
     console.error('Error generating tasks:', error);

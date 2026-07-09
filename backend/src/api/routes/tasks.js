@@ -1,27 +1,7 @@
 import express from 'express';
-import { readFileSync, writeFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import { tasksData, recordTaskCompletion } from '../../data/store.js';
 
 const router = express.Router();
-
-// Load tasks data
-const tasksPath = join(__dirname, '../../data/generatedTasks.json');
-let tasksData;
-
-function loadTasks() {
-  tasksData = JSON.parse(readFileSync(tasksPath, 'utf-8'));
-}
-
-function saveTasks() {
-  writeFileSync(tasksPath, JSON.stringify(tasksData, null, 2), 'utf-8');
-}
-
-// Initialize on module load
-loadTasks();
 
 /**
  * GET /api/tasks/:userId
@@ -110,26 +90,25 @@ router.post('/:userId/:taskId/advance', (req, res) => {
     task.steps[currentStepIndex + 1].status = 'ACTIVE';
     task.currentStep = currentStepIndex + 2; // +2 because steps are 1-indexed
 
-    saveTasks();
-
     return res.json({
       success: true,
       nextStep: task.steps[currentStepIndex + 1].stepId,
       message: 'Advanced to next step',
     });
-  } else {
-    // Task complete
-    task.status = 'COMPLETE';
-    task.currentStep = task.totalSteps;
-
-    saveTasks();
-
-    return res.json({
-      success: true,
-      nextStep: null,
-      message: 'Task completed',
-    });
   }
+
+  // No more steps: complete the task and record it toward progress once.
+  if (task.status !== 'COMPLETE') {
+    task.status = 'COMPLETE';
+    recordTaskCompletion(task.category);
+  }
+  task.currentStep = task.totalSteps;
+
+  return res.json({
+    success: true,
+    nextStep: null,
+    message: 'Task completed',
+  });
 });
 
 export default router;
