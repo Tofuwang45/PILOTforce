@@ -1,0 +1,27 @@
+export const mockProgress = {
+  overall: {
+    completed: 1,
+    total: 12,
+    percentage: 8
+  },
+  categories: [
+    {
+      name: "Dev Env",
+      completed: 1,
+      total: 5,
+      percentage: 20
+    },
+    {
+      name: "BT",
+      completed: 0,
+      total: 4,
+      percentage: 0
+    },
+    {
+      name: "Admin",
+      completed: 0,
+      total: 3,
+      percentage: 0
+    }
+  ]
+};

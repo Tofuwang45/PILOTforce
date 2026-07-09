@@ -13,6 +13,15 @@ export default {
         pending: '#6b7280',
         terminal: '#1e293b',
       },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(-10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        fadeIn: 'fadeIn 0.3s ease-out',
+      },
     },
   },
   plugins: [],
