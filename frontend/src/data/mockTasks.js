@@ -24,7 +24,7 @@ export const mockTasks = {
           title: "Clone the Core repo",
           status: "PENDING",
           order: 3,
-          totalSteps: 2,
+          totalSteps: 3,
           currentStep: 1
         },
         {
@@ -32,7 +32,7 @@ export const mockTasks = {
           title: "Start and run Core app locally",
           status: "PENDING",
           order: 4,
-          totalSteps: 3,
+          totalSteps: 4,
           currentStep: 1
         },
         {
@@ -40,7 +40,7 @@ export const mockTasks = {
           title: "Request permissions",
           status: "AWAITING_APPROVAL",
           order: 5,
-          totalSteps: 1,
+          totalSteps: 2,
           currentStep: 1
         }
       ]
@@ -50,10 +50,10 @@ export const mockTasks = {
       tasks: [
         {
           taskId: "bt-01",
-          title: "Complete BT orientation module",
+          title: "BT orientation module",
           status: "PENDING",
           order: 1,
-          totalSteps: 5,
+          totalSteps: 3,
           currentStep: 1
         },
         {
@@ -61,7 +61,7 @@ export const mockTasks = {
           title: "Set up BT dev environment",
           status: "PENDING",
           order: 2,
-          totalSteps: 4,
+          totalSteps: 3,
           currentStep: 1
         },
         {
@@ -69,7 +69,7 @@ export const mockTasks = {
           title: "Run first BT build",
           status: "PENDING",
           order: 3,
-          totalSteps: 3,
+          totalSteps: 2,
           currentStep: 1
         },
         {
@@ -90,7 +90,7 @@ export const mockTasks = {
           title: "Complete compliance training",
           status: "PENDING",
           order: 1,
-          totalSteps: 6,
+          totalSteps: 2,
           currentStep: 1
         },
         {
@@ -98,7 +98,7 @@ export const mockTasks = {
           title: "Set up 1Password vault access",
           status: "AWAITING_APPROVAL",
           order: 2,
-          totalSteps: 2,
+          totalSteps: 3,
           currentStep: 1
         },
         {

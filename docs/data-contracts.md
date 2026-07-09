@@ -7,8 +7,8 @@
 **Response:**
 ```json
 {
-  "userId": "sarah-brown-001",
-  "name": "Sarah Brown",
+  "userId": "sarah-chen-001",
+  "name": "Sarah Chen",
   "role": "Intern",
   "team": "Platform Cloud",
   "startDate": "2026-07-07",

@@ -1,7 +1,7 @@
 export const mockManagerConfig = {
   teamId: "platform-cloud",
   role: "software_engineer",
-  configuredBy: "Alex Thompson",
+  configuredBy: "Alex Martinez",
   categories: [
     {
       name: "DEV ENVIRONMENT",

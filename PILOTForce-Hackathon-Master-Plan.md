@@ -130,7 +130,7 @@ Based on the mockup and team decisions, here is the complete feature spec:
 - `AGENT_RUNNING` - Agent is processing (yellow pulse)
 
 ### Demo Persona Data
-- **Name:** Sarah Brown
+- **Name:** Sarah Chen
 - **Role:** Intern
 - **Day:** 3
 - **Team:** Platform Cloud (Software Engineer)

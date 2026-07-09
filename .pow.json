@@ -1,0 +1,7 @@
+{
+  "verify": [
+    "cd frontend && npm run lint",
+    "cd frontend && npm run build",
+    "for f in backend/server.js $(find backend/src -name '*.js'); do node --check \"$f\" || exit 1; done"
+  ]
+}
