@@ -1,0 +1,74 @@
+{
+  "activities": [
+    {
+      "id": "act-001",
+      "timestamp": "2m ago",
+      "message": "Agent checking extension compatibility...",
+      "status": "in_progress",
+      "dotColor": "yellow"
+    },
+    {
+      "id": "act-002",
+      "timestamp": "5m ago",
+      "message": "Extension pack verified",
+      "status": "complete",
+      "dotColor": "green"
+    },
+    {
+      "id": "act-003",
+      "timestamp": "8m ago",
+      "message": "Verifying repo access permissions...",
+      "status": "complete",
+      "dotColor": "green"
+    },
+    {
+      "id": "act-004",
+      "timestamp": "12m ago",
+      "message": "VS Code installation confirmed",
+      "status": "complete",
+      "dotColor": "green"
+    },
+    {
+      "id": "act-005",
+      "timestamp": "15m ago",
+      "message": "Checking system requirements...",
+      "status": "complete",
+      "dotColor": "green"
+    },
+    {
+      "id": "act-006",
+      "timestamp": "18m ago",
+      "message": "Generating personalized checklist...",
+      "status": "complete",
+      "dotColor": "green"
+    },
+    {
+      "id": "act-007",
+      "timestamp": "22m ago",
+      "message": "Analyzing team configuration...",
+      "status": "complete",
+      "dotColor": "green"
+    },
+    {
+      "id": "act-008",
+      "timestamp": "25m ago",
+      "message": "Loading Platform Cloud onboarding profile...",
+      "status": "complete",
+      "dotColor": "green"
+    },
+    {
+      "id": "act-009",
+      "timestamp": "28m ago",
+      "message": "Agent initialized for Sarah Chen",
+      "status": "complete",
+      "dotColor": "green"
+    },
+    {
+      "id": "act-010",
+      "timestamp": "30m ago",
+      "message": "Starting onboarding automation...",
+      "status": "complete",
+      "dotColor": "green"
+    }
+  ]
+}

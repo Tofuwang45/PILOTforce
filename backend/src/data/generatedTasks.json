@@ -1,0 +1,549 @@
+{
+  "tasks": [
+    {
+      "taskId": "dev-env-01",
+      "category": "DEV ENVIRONMENT",
+      "title": "Install VS Code & Claude Code",
+      "status": "ACTIVE",
+      "order": 1,
+      "totalSteps": 4,
+      "currentStep": 2,
+      "steps": [
+        {
+          "stepId": "s1",
+          "title": "Download VS Code",
+          "status": "COMPLETE",
+          "description": "Download and install VS Code from official website.",
+          "terminalOutput": null,
+          "statusChip": {
+            "label": "VS Code installed",
+            "icon": "check"
+          }
+        },
+        {
+          "stepId": "s2",
+          "title": "Install Extensions",
+          "status": "ACTIVE",
+          "description": "Install the Claude Code and Salesforce Extensions Pack in VS Code.",
+          "terminalOutput": "$ code --install-extension Salesforce.salesforcedx-vscode\n✓ Installing Salesforce Extension Pack...\n✓ Installing Claude Code extension...\n✓ All extensions installed successfully",
+          "statusChip": {
+            "label": "Extensions installed",
+            "icon": "check"
+          }
+        },
+        {
+          "stepId": "s3",
+          "title": "Verify Claude Code",
+          "status": "PENDING",
+          "description": "Open Claude Code and verify it's working correctly.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s4",
+          "title": "Open Workspace",
+          "status": "PENDING",
+          "description": "Open your team's workspace in VS Code.",
+          "terminalOutput": null,
+          "statusChip": null
+        }
+      ],
+      "resources": [
+        {
+          "title": "VS Code Download Page",
+          "url": "https://code.visualstudio.com/download",
+          "icon": "external-link"
+        },
+        {
+          "title": "Claude Code Quickstart",
+          "url": "https://claude.ai/code",
+          "icon": "book"
+        },
+        {
+          "title": "Salesforce Extension Pack Docs",
+          "url": "https://developer.salesforce.com/tools/vscode",
+          "icon": "file-text"
+        }
+      ]
+    },
+    {
+      "taskId": "dev-env-02",
+      "category": "DEV ENVIRONMENT",
+      "title": "Set up OrgFarm extension",
+      "status": "PENDING",
+      "order": 2,
+      "totalSteps": 3,
+      "currentStep": 1,
+      "steps": [
+        {
+          "stepId": "s1",
+          "title": "Install OrgFarm CLI",
+          "status": "PENDING",
+          "description": "Install the OrgFarm command-line tool for Salesforce org management.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s2",
+          "title": "Configure Authentication",
+          "status": "PENDING",
+          "description": "Set up authentication with your Salesforce credentials.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s3",
+          "title": "Create Test Org",
+          "status": "PENDING",
+          "description": "Provision your first test org using OrgFarm.",
+          "terminalOutput": null,
+          "statusChip": null
+        }
+      ],
+      "resources": [
+        {
+          "title": "OrgFarm Documentation",
+          "url": "https://sfdc.co/orgfarm-docs",
+          "icon": "book"
+        },
+        {
+          "title": "Org Setup Guide",
+          "url": "https://sfdc.co/org-setup",
+          "icon": "file-text"
+        }
+      ]
+    },
+    {
+      "taskId": "dev-env-03",
+      "category": "DEV ENVIRONMENT",
+      "title": "Clone the Core repo",
+      "status": "PENDING",
+      "order": 3,
+      "totalSteps": 3,
+      "currentStep": 1,
+      "steps": [
+        {
+          "stepId": "s1",
+          "title": "Set up Git SSH keys",
+          "status": "PENDING",
+          "description": "Configure SSH keys for Git access to internal repositories.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s2",
+          "title": "Clone Core repository",
+          "status": "PENDING",
+          "description": "Clone the Core repo to your local machine.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s3",
+          "title": "Verify repository structure",
+          "status": "PENDING",
+          "description": "Confirm all files and directories are present.",
+          "terminalOutput": null,
+          "statusChip": null
+        }
+      ],
+      "resources": [
+        {
+          "title": "Core Repo Access Guide",
+          "url": "https://git.soma.salesforce.com/core",
+          "icon": "github"
+        },
+        {
+          "title": "SSH Key Setup",
+          "url": "https://sfdc.co/ssh-setup",
+          "icon": "key"
+        }
+      ]
+    },
+    {
+      "taskId": "dev-env-04",
+      "category": "DEV ENVIRONMENT",
+      "title": "Start and run Core app locally",
+      "status": "PENDING",
+      "order": 4,
+      "totalSteps": 4,
+      "currentStep": 1,
+      "steps": [
+        {
+          "stepId": "s1",
+          "title": "Install dependencies",
+          "status": "PENDING",
+          "description": "Run npm install to fetch all required packages.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s2",
+          "title": "Configure environment",
+          "status": "PENDING",
+          "description": "Set up .env file with local configuration.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s3",
+          "title": "Start dev server",
+          "status": "PENDING",
+          "description": "Run the development server and verify it starts successfully.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s4",
+          "title": "Access local app",
+          "status": "PENDING",
+          "description": "Open the app in your browser and confirm it loads.",
+          "terminalOutput": null,
+          "statusChip": null
+        }
+      ],
+      "resources": [
+        {
+          "title": "Core Development Setup",
+          "url": "https://sfdc.co/core-dev-setup",
+          "icon": "book"
+        },
+        {
+          "title": "Troubleshooting Guide",
+          "url": "https://sfdc.co/core-troubleshooting",
+          "icon": "alert-circle"
+        }
+      ]
+    },
+    {
+      "taskId": "dev-env-05",
+      "category": "DEV ENVIRONMENT",
+      "title": "Request permissions",
+      "status": "AWAITING_APPROVAL",
+      "order": 5,
+      "totalSteps": 2,
+      "currentStep": 1,
+      "steps": [
+        {
+          "stepId": "s1",
+          "title": "Submit access request",
+          "status": "PENDING",
+          "description": "Request access to internal tools and repositories via IT portal.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s2",
+          "title": "Await manager approval",
+          "status": "PENDING",
+          "description": "Waiting for manager to approve your access request.",
+          "terminalOutput": null,
+          "statusChip": null
+        }
+      ],
+      "resources": [
+        {
+          "title": "Access Request Portal",
+          "url": "https://sfdc.co/access-portal",
+          "icon": "lock"
+        }
+      ]
+    },
+    {
+      "taskId": "bt-01",
+      "category": "BLACK TAB (BT)",
+      "title": "BT orientation module",
+      "status": "PENDING",
+      "order": 6,
+      "totalSteps": 3,
+      "currentStep": 1,
+      "steps": [
+        {
+          "stepId": "s1",
+          "title": "Watch orientation video",
+          "status": "PENDING",
+          "description": "Complete the Black Tab orientation training video.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s2",
+          "title": "Review BT best practices",
+          "status": "PENDING",
+          "description": "Read the Black Tab development best practices guide.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s3",
+          "title": "Pass orientation quiz",
+          "status": "PENDING",
+          "description": "Complete the orientation quiz with a passing score.",
+          "terminalOutput": null,
+          "statusChip": null
+        }
+      ],
+      "resources": [
+        {
+          "title": "BT Orientation Video",
+          "url": "https://sfdc.co/bt-orientation",
+          "icon": "video"
+        },
+        {
+          "title": "BT Best Practices",
+          "url": "https://sfdc.co/bt-practices",
+          "icon": "book"
+        }
+      ]
+    },
+    {
+      "taskId": "bt-02",
+      "category": "BLACK TAB (BT)",
+      "title": "Set up BT dev environment",
+      "status": "PENDING",
+      "order": 7,
+      "totalSteps": 3,
+      "currentStep": 1,
+      "steps": [
+        {
+          "stepId": "s1",
+          "title": "Install BT tools",
+          "status": "PENDING",
+          "description": "Install Black Tab-specific development tools and dependencies.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s2",
+          "title": "Configure BT workspace",
+          "status": "PENDING",
+          "description": "Set up your BT workspace with proper configuration.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s3",
+          "title": "Verify BT environment",
+          "status": "PENDING",
+          "description": "Run verification script to confirm BT environment is ready.",
+          "terminalOutput": null,
+          "statusChip": null
+        }
+      ],
+      "resources": [
+        {
+          "title": "BT Setup Guide",
+          "url": "https://sfdc.co/bt-setup",
+          "icon": "settings"
+        }
+      ]
+    },
+    {
+      "taskId": "bt-03",
+      "category": "BLACK TAB (BT)",
+      "title": "Run first BT build",
+      "status": "PENDING",
+      "order": 8,
+      "totalSteps": 2,
+      "currentStep": 1,
+      "steps": [
+        {
+          "stepId": "s1",
+          "title": "Trigger BT build",
+          "status": "PENDING",
+          "description": "Start your first Black Tab build process.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s2",
+          "title": "Verify build success",
+          "status": "PENDING",
+          "description": "Confirm the build completes successfully without errors.",
+          "terminalOutput": null,
+          "statusChip": null
+        }
+      ],
+      "resources": [
+        {
+          "title": "BT Build Guide",
+          "url": "https://sfdc.co/bt-build",
+          "icon": "package"
+        }
+      ]
+    },
+    {
+      "taskId": "bt-04",
+      "category": "BLACK TAB (BT)",
+      "title": "Submit practice PR",
+      "status": "PENDING",
+      "order": 9,
+      "totalSteps": 4,
+      "currentStep": 1,
+      "steps": [
+        {
+          "stepId": "s1",
+          "title": "Create feature branch",
+          "status": "PENDING",
+          "description": "Create a new branch for your practice change.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s2",
+          "title": "Make a small change",
+          "status": "PENDING",
+          "description": "Edit a file to add a comment or fix a typo.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s3",
+          "title": "Commit and push",
+          "status": "PENDING",
+          "description": "Commit your change and push to remote.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s4",
+          "title": "Create pull request",
+          "status": "PENDING",
+          "description": "Open a PR and request review from your mentor.",
+          "terminalOutput": null,
+          "statusChip": null
+        }
+      ],
+      "resources": [
+        {
+          "title": "PR Best Practices",
+          "url": "https://sfdc.co/pr-guide",
+          "icon": "git-pull-request"
+        }
+      ]
+    },
+    {
+      "taskId": "admin-01",
+      "category": "ADMIN / DOCS",
+      "title": "Complete compliance training",
+      "status": "PENDING",
+      "order": 10,
+      "totalSteps": 2,
+      "currentStep": 1,
+      "steps": [
+        {
+          "stepId": "s1",
+          "title": "Complete training modules",
+          "status": "PENDING",
+          "description": "Complete all required compliance and security training modules in Trailhead.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s2",
+          "title": "Pass compliance quiz",
+          "status": "PENDING",
+          "description": "Complete the compliance certification quiz.",
+          "terminalOutput": null,
+          "statusChip": null
+        }
+      ],
+      "resources": [
+        {
+          "title": "Compliance Training Portal",
+          "url": "https://trailhead.salesforce.com/compliance",
+          "icon": "shield"
+        }
+      ]
+    },
+    {
+      "taskId": "admin-02",
+      "category": "ADMIN / DOCS",
+      "title": "Set up 1Password vault access",
+      "status": "AWAITING_APPROVAL",
+      "order": 11,
+      "totalSteps": 3,
+      "currentStep": 1,
+      "steps": [
+        {
+          "stepId": "s1",
+          "title": "Install 1Password",
+          "status": "PENDING",
+          "description": "Download and install 1Password app.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s2",
+          "title": "Request vault access",
+          "status": "PENDING",
+          "description": "Submit request for team vault access.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s3",
+          "title": "Join team vault",
+          "status": "PENDING",
+          "description": "Accept invitation and access team vault.",
+          "terminalOutput": null,
+          "statusChip": null
+        }
+      ],
+      "resources": [
+        {
+          "title": "1Password Setup Guide",
+          "url": "https://sfdc.co/1password-setup",
+          "icon": "key"
+        }
+      ]
+    },
+    {
+      "taskId": "admin-03",
+      "category": "ADMIN / DOCS",
+      "title": "Review team documentation",
+      "status": "PENDING",
+      "order": 12,
+      "totalSteps": 3,
+      "currentStep": 1,
+      "steps": [
+        {
+          "stepId": "s1",
+          "title": "Read team handbook",
+          "status": "PENDING",
+          "description": "Review the Platform Cloud team handbook and procedures.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s2",
+          "title": "Explore team wiki",
+          "status": "PENDING",
+          "description": "Familiarize yourself with the team wiki and resources.",
+          "terminalOutput": null,
+          "statusChip": null
+        },
+        {
+          "stepId": "s3",
+          "title": "Join team channels",
+          "status": "PENDING",
+          "description": "Join all relevant Slack channels for your team.",
+          "terminalOutput": null,
+          "statusChip": null
+        }
+      ],
+      "resources": [
+        {
+          "title": "Platform Cloud Wiki",
+          "url": "https://sfdc.co/platform-cloud-wiki",
+          "icon": "book-open"
+        },
+        {
+          "title": "Team Slack Channels",
+          "url": "https://salesforce.slack.com/channels",
+          "icon": "message-square"
+        }
+      ]
+    }
+  ]
+}

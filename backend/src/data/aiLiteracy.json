@@ -1,0 +1,17 @@
+{
+  "currentLevel": "PL1",
+  "targetLevel": "PL2",
+  "progress": 25,
+  "completedModules": [
+    "Introduction to Claude Code"
+  ],
+  "recommendations": [
+    "Complete Claude Code basics module",
+    "Try 3 code-assist prompts this week",
+    "Explore Agentforce documentation"
+  ],
+  "nextMilestone": {
+    "level": "PL2",
+    "requirement": "Complete 5 supervised AI tasks"
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "teamId": "platform-cloud",
+  "role": "software_engineer",
+  "configuredBy": "Alex Martinez",
+  "categories": [
+    {
+      "name": "DEV ENVIRONMENT",
+      "tasks": [
+        {
+          "title": "Install VS Code & Claude Code",
+          "required": true,
+          "agentCanVerify": true
+        },
+        {
+          "title": "Set up OrgFarm extension",
+          "required": true,
+          "agentCanVerify": true
+        },
+        {
+          "title": "Clone the Core repo",
+          "required": true,
+          "agentCanVerify": true
+        },
+        {
+          "title": "Start and run Core app locally",
+          "required": true,
+          "agentCanVerify": false
+        },
+        {
+          "title": "Request permissions",
+          "required": true,
+          "requiresApproval": true
+        }
+      ]
+    },
+    {
+      "name": "BLACK TAB (BT)",
+      "tasks": [
+        {
+          "title": "BT orientation module",
+          "required": true,
+          "agentCanVerify": false
+        },
+        {
+          "title": "Set up BT dev environment",
+          "required": true,
+          "agentCanVerify": true
+        },
+        {
+          "title": "Run first BT build",
+          "required": false,
+          "agentCanVerify": true
+        },
+        {
+          "title": "Submit practice PR",
+          "required": false,
+          "agentCanVerify": false
+        }
+      ]
+    },
+    {
+      "name": "ADMIN / DOCS",
+      "tasks": [
+        {
+          "title": "Complete compliance training",
+          "required": true,
+          "agentCanVerify": false
+        },
+        {
+          "title": "Set up 1Password vault access",
+          "required": true,
+          "requiresApproval": true
+        },
+        {
+          "title": "Review team documentation",
+          "required": true,
+          "agentCanVerify": false
+        }
+      ]
+    }
+  ],
+  "aiLiteracy": {
+    "currentLevel": "PL1",
+    "targetLevel": "PL2",
+    "recommendations": [
+      "Complete Claude Code basics module",
+      "Try 3 code-assist prompts this week",
+      "Explore Agentforce documentation"
+    ]
+  }
+}
