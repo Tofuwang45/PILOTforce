@@ -17,6 +17,11 @@ function App() {
   const [activities, setActivities] = useState(null);
   const [progress, setProgress] = useState(null);
   const activityCounter = useRef(0);
+  // Below the `lg` breakpoint the task list and activity feed collapse into
+  // off-canvas drawers (toggled from the header) so the main content keeps
+  // usable width instead of three fixed-width columns fighting for space.
+  const [leftDrawerOpen, setLeftDrawerOpen] = useState(false);
+  const [rightDrawerOpen, setRightDrawerOpen] = useState(false);
 
   // Push a real activity into the feed. Called by agent-run terminals as they
   // complete each line of work — routes through the server so the feed is a
@@ -133,9 +138,17 @@ function App() {
 
   return (
     <div className="h-screen flex flex-col bg-gray-100">
-      <Header user={user} viewMode={viewMode} onToggleView={handleToggleView} />
+      <Header
+        user={user}
+        viewMode={viewMode}
+        onToggleView={handleToggleView}
+        onOpenTasks={() => setLeftDrawerOpen((v) => !v)}
+        onOpenActivity={() => setRightDrawerOpen((v) => !v)}
+        leftDrawerOpen={leftDrawerOpen}
+        rightDrawerOpen={rightDrawerOpen}
+      />
 
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-hidden min-w-0">
         {viewMode === 'manager' ? (
           <ManagerView userId={USER_ID} onTaskApproved={handleTaskApproved} />
         ) : (
@@ -146,6 +159,8 @@ function App() {
               activeTaskId={activeTaskId}
               onTaskClick={setActiveTaskId}
               nextTaskHint={nextTaskHint}
+              open={leftDrawerOpen}
+              onClose={() => setLeftDrawerOpen(false)}
             />
             <MainContent
               taskDetail={taskDetail}
@@ -156,6 +171,8 @@ function App() {
             <RightSidebar
               activities={activities}
               progress={progress}
+              open={rightDrawerOpen}
+              onClose={() => setRightDrawerOpen(false)}
             />
           </>
         )}

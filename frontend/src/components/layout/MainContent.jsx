@@ -6,7 +6,7 @@ import { StatusChip } from '@/components/tasks/StatusChip';
 export function MainContent({ taskDetail, onAdvanceStep, onActivity, onSign }) {
   if (!taskDetail) {
     return (
-      <main className="flex-1 p-8" style={{ background: '#f3f3f3' }}>
+      <main className="flex-1 min-w-0 p-4 sm:p-8" style={{ background: '#f3f3f3' }}>
         <div className="text-center text-gray-500 mt-20">
           Select a task to begin
         </div>
@@ -17,12 +17,12 @@ export function MainContent({ taskDetail, onAdvanceStep, onActivity, onSign }) {
   const currentStep = taskDetail.steps?.[taskDetail.currentStep - 1];
 
   return (
-    <main className="flex-1 p-8 overflow-y-auto" style={{ background: '#f3f3f3' }}>
+    <main className="flex-1 min-w-0 p-4 sm:p-8 overflow-y-auto" style={{ background: '#f3f3f3' }}>
       <div className="max-w-4xl mx-auto space-y-6">
-        <div className="flex items-start justify-between">
-          <div>
-            <div className="flex items-center gap-3 mb-2">
-              <h1 className="text-2xl font-bold text-gray-900">{taskDetail.title}</h1>
+        <div className="flex flex-wrap items-start justify-between gap-2">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-3 mb-2">
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-900 break-words">{taskDetail.title}</h1>
               <StatusChip status={taskDetail.status} />
             </div>
             <p className="text-sm text-gray-600">
