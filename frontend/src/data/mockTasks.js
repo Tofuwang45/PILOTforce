@@ -40,7 +40,7 @@ export const mockTasks = {
           title: "Request permissions",
           status: "AWAITING_APPROVAL",
           order: 5,
-          totalSteps: 2,
+          totalSteps: 1,
           currentStep: 1
         }
       ]
@@ -88,7 +88,7 @@ export const mockTasks = {
         {
           taskId: "admin-01",
           title: "Complete compliance training",
-          status: "PENDING",
+          status: "ACTIVE",
           order: 1,
           totalSteps: 2,
           currentStep: 1
@@ -98,7 +98,7 @@ export const mockTasks = {
           title: "Set up 1Password vault access",
           status: "AWAITING_APPROVAL",
           order: 2,
-          totalSteps: 3,
+          totalSteps: 2,
           currentStep: 1
         },
         {
@@ -106,7 +106,7 @@ export const mockTasks = {
           title: "Review team documentation",
           status: "PENDING",
           order: 3,
-          totalSteps: 3,
+          totalSteps: 2,
           currentStep: 1
         }
       ]

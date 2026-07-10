@@ -262,6 +262,76 @@ export const mockTaskDetails = {
     ]
   },
 
+  "dev-env-04": {
+    taskId: "dev-env-04",
+    category: "DEV ENVIRONMENT",
+    title: "Verify Core build in workspace",
+    status: "PENDING",
+    order: 4,
+    totalSteps: 4,
+    currentStep: 1,
+    steps: [
+      {
+        stepId: "s1",
+        title: "Run a full Core build",
+        type: "agent-run",
+        status: "ACTIVE",
+        description:
+          "The agent kicks off a full Core build inside your cloud workspace to confirm everything is wired up correctly before you start making changes.",
+        agentScript: [
+          { text: "→ bazel build //core/... --config=dev", kind: "command", pause: 700, activity: { message: "Starting Core build…", status: "in_progress" } },
+          { text: "Resolving build graph…", kind: "info", pause: 900 },
+          { text: "Compiling core-public/core (this can take a while on first run)…", kind: "info", pause: 1000 },
+          { text: "✓ Build succeeded: 0 errors, 0 warnings", kind: "success", pause: 500, activity: { message: "Core build succeeded", status: "complete" } },
+          { text: "Running smoke tests…", kind: "info", pause: 700 },
+          { text: "✓ Smoke tests passed (12/12)", kind: "success", pause: 400, activity: { message: "Core smoke tests passed", status: "complete" } }
+        ],
+        completeChip: { label: "Core build verified", icon: "check" }
+      },
+      {
+        stepId: "s2",
+        title: "Review build output",
+        type: "standard",
+        status: "PENDING",
+        description: "Check the build log in your workspace terminal to confirm there were no silent failures.",
+        terminalOutput: null,
+        statusChip: null
+      },
+      {
+        stepId: "s3",
+        title: "Run the local test suite",
+        type: "standard",
+        status: "PENDING",
+        description: "Run the Core unit test suite from the integrated terminal to make sure your environment matches the team baseline.",
+        terminalOutput: null,
+        statusChip: null
+      },
+      {
+        stepId: "s4",
+        title: "Confirm environment is ready",
+        type: "standard",
+        status: "PENDING",
+        description: "Your workspace is verified and ready for real development work.",
+        terminalOutput: null,
+        statusChip: null
+      }
+    ],
+    resources: [
+      {
+        title: "Core build troubleshooting",
+        icon: "book",
+        content: {
+          heading: "If the build fails",
+          body: [
+            "Most first-build failures are dependency cache issues — re-running the build usually resolves them.",
+            "If it fails twice in a row, ask the agent to re-provision the workspace rather than debugging a stale cache by hand.",
+            "You can always open a fresh Claude Code session in the workspace and ask it to diagnose a build failure for you."
+          ]
+        }
+      }
+    ]
+  },
+
   "dev-env-05": {
     taskId: "dev-env-05",
     category: "DEV ENVIRONMENT",
@@ -395,6 +465,233 @@ export const mockTaskDetails = {
             "1Password stores your team's shared credentials securely. Once your manager approves vault access, the shared vault appears automatically in your 1Password app.",
             "Install the desktop app and the browser extension, then sign in with your Salesforce SSO.",
             "Never paste credentials into code or chat — reference them from the vault."
+          ]
+        }
+      }
+    ]
+  },
+
+  "bt-01": {
+    taskId: "bt-01",
+    category: "BLACK TAB (BT)",
+    title: "BT orientation module",
+    status: "PENDING",
+    order: 1,
+    totalSteps: 3,
+    currentStep: 1,
+    steps: [
+      {
+        stepId: "s1",
+        title: "Watch the BT orientation video",
+        type: "standard",
+        status: "ACTIVE",
+        description: "Watch the Black Tab (BT) team orientation to understand what the team owns and how it fits into Platform Cloud.",
+        terminalOutput: null,
+        statusChip: null
+      },
+      {
+        stepId: "s2",
+        title: "Read the BT team charter",
+        type: "standard",
+        status: "PENDING",
+        description: "Skim the team charter doc to learn BT's on-call rotation, review process, and key contacts.",
+        terminalOutput: null,
+        statusChip: null
+      },
+      {
+        stepId: "s3",
+        title: "Meet your onboarding buddy",
+        type: "standard",
+        status: "PENDING",
+        description: "Set up a 15-minute intro call with your assigned onboarding buddy on the BT team.",
+        terminalOutput: null,
+        statusChip: null
+      }
+    ],
+    resources: [
+      {
+        title: "BT Team Charter",
+        icon: "file-text",
+        content: {
+          heading: "Black Tab (BT) Team Charter",
+          body: [
+            "BT owns the internal tooling that powers developer productivity across Platform Cloud.",
+            "The team runs a weekly on-call rotation and reviews PRs within one business day.",
+            "Your onboarding buddy will be your first point of contact for any team-specific questions."
+          ]
+        }
+      }
+    ]
+  },
+
+  "bt-02": {
+    taskId: "bt-02",
+    category: "BLACK TAB (BT)",
+    title: "Set up BT dev environment",
+    status: "PENDING",
+    order: 2,
+    totalSteps: 3,
+    currentStep: 1,
+    steps: [
+      {
+        stepId: "s1",
+        title: "Provision BT workspace add-ons",
+        type: "agent-run",
+        status: "ACTIVE",
+        description: "The agent installs the BT-specific tooling on top of your existing Core workspace.",
+        agentScript: [
+          { text: "→ POST sfw-console/api/workspaces/addons { pkg: 'bt-tooling' }", kind: "command", pause: 600, activity: { message: "Installing BT tooling…", status: "in_progress" } },
+          { text: "Fetching bt-cli and bt-devkit…", kind: "info", pause: 800 },
+          { text: "✓ BT tooling installed", kind: "success", pause: 500, activity: { message: "BT tooling installed in workspace", status: "complete" } },
+          { text: "Linking workspace to BT service registry…", kind: "info", pause: 600 },
+          { text: "✓ Workspace registered with BT services", kind: "success", pause: 400, activity: { message: "Workspace linked to BT services", status: "complete" } }
+        ],
+        completeChip: { label: "BT dev environment ready", icon: "check" }
+      },
+      {
+        stepId: "s2",
+        title: "Configure local env vars",
+        type: "standard",
+        status: "PENDING",
+        description: "Copy the BT team's shared .env template into your workspace.",
+        terminalOutput: null,
+        statusChip: null
+      },
+      {
+        stepId: "s3",
+        title: "Confirm services are reachable",
+        type: "standard",
+        status: "PENDING",
+        description: "Ping the BT dev services from your workspace terminal to confirm connectivity.",
+        terminalOutput: null,
+        statusChip: null
+      }
+    ],
+    resources: []
+  },
+
+  "bt-03": {
+    taskId: "bt-03",
+    category: "BLACK TAB (BT)",
+    title: "Run first BT build",
+    status: "PENDING",
+    order: 3,
+    totalSteps: 2,
+    currentStep: 1,
+    steps: [
+      {
+        stepId: "s1",
+        title: "Build the BT service",
+        type: "agent-run",
+        status: "ACTIVE",
+        description: "The agent runs the BT service build to confirm your environment is set up correctly.",
+        agentScript: [
+          { text: "→ bazel build //bt/... --config=dev", kind: "command", pause: 700, activity: { message: "Starting BT build…", status: "in_progress" } },
+          { text: "Compiling bt services…", kind: "info", pause: 900 },
+          { text: "✓ Build succeeded: 0 errors, 0 warnings", kind: "success", pause: 500, activity: { message: "BT build succeeded", status: "complete" } }
+        ],
+        completeChip: { label: "BT build verified", icon: "check" }
+      },
+      {
+        stepId: "s2",
+        title: "Confirm build artifacts",
+        type: "standard",
+        status: "PENDING",
+        description: "Check that the build produced the expected artifacts in your workspace output directory.",
+        terminalOutput: null,
+        statusChip: null
+      }
+    ],
+    resources: []
+  },
+
+  "bt-04": {
+    taskId: "bt-04",
+    category: "BLACK TAB (BT)",
+    title: "Submit practice PR",
+    status: "PENDING",
+    order: 4,
+    totalSteps: 4,
+    currentStep: 1,
+    steps: [
+      {
+        stepId: "s1",
+        title: "Make a small practice change",
+        type: "standard",
+        status: "ACTIVE",
+        description: "Make a small, low-risk change in the BT practice repo — e.g. fix a typo in a README.",
+        terminalOutput: null,
+        statusChip: null
+      },
+      {
+        stepId: "s2",
+        title: "Open a pull request",
+        type: "standard",
+        status: "PENDING",
+        description: "Push your branch and open a PR against the practice repo's main branch.",
+        terminalOutput: null,
+        statusChip: null
+      },
+      {
+        stepId: "s3",
+        title: "Address review feedback",
+        type: "standard",
+        status: "PENDING",
+        description: "Your onboarding buddy will leave a couple of practice comments — respond and push a follow-up commit.",
+        terminalOutput: null,
+        statusChip: null
+      },
+      {
+        stepId: "s4",
+        title: "Merge your PR",
+        type: "standard",
+        status: "PENDING",
+        description: "Once approved, merge your practice PR. You've now completed a full BT review cycle.",
+        terminalOutput: null,
+        statusChip: null
+      }
+    ],
+    resources: []
+  },
+
+  "admin-03": {
+    taskId: "admin-03",
+    category: "ADMIN / DOCS",
+    title: "Review team documentation",
+    status: "PENDING",
+    order: 3,
+    totalSteps: 2,
+    currentStep: 1,
+    steps: [
+      {
+        stepId: "s1",
+        title: "Read the Platform Cloud onboarding doc",
+        type: "standard",
+        status: "ACTIVE",
+        description: "Read through the Platform Cloud team's onboarding doc to understand ownership boundaries and key services.",
+        terminalOutput: null,
+        statusChip: null
+      },
+      {
+        stepId: "s2",
+        title: "Bookmark key team resources",
+        type: "standard",
+        status: "PENDING",
+        description: "Bookmark the team wiki, on-call schedule, and Slack channels referenced in the doc.",
+        terminalOutput: null,
+        statusChip: null
+      }
+    ],
+    resources: [
+      {
+        title: "Platform Cloud Onboarding Doc",
+        icon: "file-text",
+        content: {
+          heading: "Platform Cloud Onboarding",
+          body: [
+            "Platform Cloud owns the core services that power the Salesforce platform's developer experience.",
+            "Key channels: #platform-cloud-team for day-to-day discussion, #platform-cloud-oncall for incidents.",
+            "Review the architecture doc linked from the wiki home page before your first 1:1 with your manager."
           ]
         }
       }

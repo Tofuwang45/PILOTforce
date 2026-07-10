@@ -46,17 +46,17 @@ export function Header({
             />
             <span
               aria-hidden="true"
-              className="hidden sm:inline-block"
+              className="hidden lg:inline-block"
               style={{ width: 1, height: 26, background: 'rgba(255,255,255,0.35)', flexShrink: 0 }}
             />
             <span
-              className="hidden sm:inline"
+              className="hidden lg:inline"
               style={{ fontSize: '1.15rem', fontWeight: 700, color: '#fff', letterSpacing: '0.2px', whiteSpace: 'nowrap' }}
             >
               PILOTForce
             </span>
             <span
-              className="slds-badge hidden md:inline-flex"
+              className="slds-badge hidden lg:inline-flex"
               style={{ background: 'rgba(255,255,255,0.2)', color: '#fff', marginLeft: 4, flexShrink: 0 }}
             >
               Onboarding
@@ -64,9 +64,12 @@ export function Header({
           </div>
         </div>
 
-        {/* Breadcrumb — hidden on narrow screens where there's no room */}
+        {/* Breadcrumb — only shown once we're past the drawer breakpoint;
+            hiding this at the same `lg` cutoff as the mobile toggle buttons
+            (rather than an earlier `md`) avoids a dead zone where both the
+            full header content and the mobile buttons are visible at once. */}
         <div
-          className="slds-global-header__item slds-grid slds-grid_vertical-align-center hidden md:flex"
+          className="slds-global-header__item slds-grid slds-grid_vertical-align-center hidden lg:flex"
           style={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.85rem', minWidth: 0, overflow: 'hidden', whiteSpace: 'nowrap' }}
         >
           <span>Onboarding</span>
@@ -96,7 +99,7 @@ export function Header({
 
             {user && (
               <div className="slds-grid slds-grid_vertical-align-center" style={{ gap: 10, minWidth: 0 }}>
-                <div className="hidden md:block" style={{ textAlign: 'right', lineHeight: 1.2 }}>
+                <div className="hidden lg:block" style={{ textAlign: 'right', lineHeight: 1.2 }}>
                   <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#fff', whiteSpace: 'nowrap' }}>{user.name}</div>
                   <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.85)', whiteSpace: 'nowrap' }}>
                     {user.role} · Day {user.currentDay}

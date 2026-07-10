@@ -26,7 +26,8 @@ export function MainContent({ taskDetail, onAdvanceStep, onActivity, onSign }) {
               <StatusChip status={taskDetail.status} />
             </div>
             <p className="text-sm text-gray-600">
-              Task {taskDetail.order} of {taskDetail.totalSteps * 3}
+              {taskDetail.category ? `${taskDetail.category} · ` : ''}
+              Step {taskDetail.currentStep} of {taskDetail.totalSteps}
             </p>
           </div>
         </div>
