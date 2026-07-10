@@ -3,6 +3,7 @@
 **Proficiency, Integration, Learning & Onboarding Tool**
 
 Team 23 - Future Force Hackathon 2026
+Kenna Nyuga-Galega
 
 ## Overview
 
