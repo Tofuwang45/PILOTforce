@@ -16,7 +16,7 @@ export const mockTaskDetails = {
   "dev-env-01": {
     taskId: "dev-env-01",
     category: "DEV ENVIRONMENT",
-    title: "Install VS Code & Claude Code",
+    title: "Authorize Salesforce Workspaces",
     status: "ACTIVE",
     order: 1,
     totalSteps: 4,
@@ -24,86 +24,88 @@ export const mockTaskDetails = {
     steps: [
       {
         stepId: "s1",
-        title: "Download VS Code",
+        title: "Sign in to the SFW Console",
         type: "standard",
         status: "COMPLETE",
-        description: "Download and install VS Code from the official website.",
+        description:
+          "You signed in to the Salesforce Workspaces console with your Salesforce SSO — no local install required.",
         terminalOutput: null,
-        statusChip: { label: "VS Code installed", icon: "check" }
+        statusChip: { label: "Signed in to SFW Console", icon: "check" }
       },
       {
         stepId: "s2",
-        title: "Install Extensions",
+        title: "Authorize OAuth access",
         type: "agent-run",
         status: "ACTIVE",
         description:
-          "The agent will install the Salesforce Extension Pack and Claude Code for you and verify each one. Watch it work in real time.",
+          "The agent completes the Salesforce Workspaces OAuth2 handshake so your cloud dev environment can be provisioned. Nothing is cloned to your laptop. Watch it work in real time.",
         agentScript: [
-          { text: "$ code --install-extension salesforce.salesforcedx-vscode", kind: "command", pause: 500, activity: { message: "Installing Salesforce Extension Pack…", status: "in_progress" } },
-          { text: "Resolving extension dependencies…", kind: "info", pause: 400 },
-          { text: "Downloading salesforcedx-vscode@60.13.0 (14.2 MB)", kind: "info", pause: 600 },
-          { text: "✓ Salesforce Extension Pack installed", kind: "success", pause: 500, activity: { message: "Salesforce Extension Pack verified", status: "complete" } },
-          { text: "$ code --install-extension anthropic.claude-code", kind: "command", pause: 500, activity: { message: "Installing Claude Code extension…", status: "in_progress" } },
-          { text: "Downloading claude-code@1.4.2 (8.6 MB)", kind: "info", pause: 600 },
-          { text: "✓ Claude Code extension installed", kind: "success", pause: 500, activity: { message: "Claude Code extension verified", status: "complete" } },
-          { text: "Verifying installation…", kind: "info", pause: 500 },
-          { text: "✓ All extensions installed successfully", kind: "success", pause: 300, activity: { message: "Environment check passed — all extensions active", status: "complete" } }
+          { text: "→ Opening git.soma.salesforce.com/pages/salesforce-workspaces/sfw-console/#!/oauth2", kind: "command", pause: 600, activity: { message: "Starting Salesforce Workspaces OAuth2…", status: "in_progress" } },
+          { text: "Redirecting to Salesforce SSO…", kind: "info", pause: 500 },
+          { text: "✓ Identity confirmed: sarah.chen@salesforce.com", kind: "success", pause: 500, activity: { message: "SSO identity confirmed", status: "complete" } },
+          { text: "Requesting scopes: workspace.read workspace.write core.access", kind: "info", pause: 600 },
+          { text: "Exchanging authorization code for access token…", kind: "info", pause: 700 },
+          { text: "✓ OAuth2 token granted (expires in 8h)", kind: "success", pause: 500, activity: { message: "Workspaces OAuth token granted", status: "complete" } },
+          { text: "Registering device with SFW dataplane…", kind: "info", pause: 500 },
+          { text: "✓ Salesforce Workspaces authorized", kind: "success", pause: 300, activity: { message: "Salesforce Workspaces authorized — no local clone needed", status: "complete" } }
         ],
-        completeChip: { label: "Extensions installed & verified", icon: "check" }
+        completeChip: { label: "Workspaces authorized", icon: "check" }
       },
       {
         stepId: "s3",
-        title: "Verify Claude Code",
+        title: "Confirm workspace entitlement",
         type: "standard",
         status: "PENDING",
-        description: "Open Claude Code and verify it's working correctly.",
+        description:
+          "Confirm your account is entitled to the Platform Cloud workspace pool.",
         terminalOutput: null,
         statusChip: null
       },
       {
         stepId: "s4",
-        title: "Open Workspace",
+        title: "Ready to provision",
         type: "standard",
         status: "PENDING",
-        description: "Open your team's workspace in VS Code.",
+        description:
+          "Authorization complete. The agent can now provision your Core workspace in the next task.",
         terminalOutput: null,
         statusChip: null
       }
     ],
     resources: [
       {
-        title: "VS Code Download Page",
+        title: "Salesforce Workspaces Console",
         icon: "external-link",
         content: {
-          heading: "Download Visual Studio Code",
+          heading: "Salesforce Workspaces (SFW) Console",
           body: [
-            "Visual Studio Code is a free, lightweight code editor that runs on macOS, Windows, and Linux.",
-            "For Salesforce development, download the Stable build (not Insiders). After installing, you'll add the Salesforce Extension Pack and Claude Code — the agent handles that for you in the next step.",
-            "System requirements: macOS 10.15+, 1 GB RAM minimum (4 GB recommended)."
+            "Salesforce Workspaces gives you a fully managed, cloud-hosted development environment — you don't clone repos or run builds on your laptop.",
+            "Sign in at git.soma.salesforce.com/pages/salesforce-workspaces/sfw-console via the OAuth2 flow. The agent handles the token exchange for you in this step.",
+            "Because everything runs in the cloud dataplane, your environment is consistent with the rest of the team and available from any machine with a browser."
           ]
         }
       },
       {
-        title: "Claude Code Quickstart",
+        title: "Why no local clone?",
         icon: "book",
         content: {
-          heading: "Claude Code Quickstart",
+          heading: "Cloud-first: no local clone",
           body: [
-            "Claude Code is an agentic coding assistant that lives in your editor and terminal. It can read your codebase, make edits across files, run commands, and explain what it's doing as it goes.",
-            "Once installed, open the Command Palette (⌘⇧P) and run 'Claude: Start Session' to begin. Ask it to scaffold a component, debug a failing test, or walk you through the Core repo.",
-            "Tip: the more context you give it about your task, the better its output."
+            "The Core repository is large and its toolchain is heavy. Salesforce Workspaces hosts the code and build environment in the cloud so you skip the multi-hour local clone and setup entirely.",
+            "You get a browser-based VS Code connected to your workspace. Files, terminal, builds, and Claude Code all run remotely on the dataplane.",
+            "This is the current, recommended path — the old 'clone the Core repo locally' flow is deprecated for interns."
           ]
         }
       },
       {
-        title: "Salesforce Extension Pack Docs",
+        title: "Claude Code in Workspaces",
         icon: "file-text",
         content: {
-          heading: "Salesforce Extension Pack",
+          heading: "Claude Code in your workspace",
           body: [
-            "The Salesforce Extension Pack bundles everything you need for Salesforce DX development: Apex, SOQL, Lightning Web Components, and org management.",
-            "Key features: syntax highlighting and IntelliSense for Apex, one-click deploy/retrieve to your org, an integrated SOQL query editor, and Apex test running with inline results.",
-            "The agent verified this pack is active in your VS Code install in the previous step."
+            "Claude Code is preinstalled in your Salesforce Workspace's browser VS Code. Open the Command Palette (⌘⇧P) and run 'Claude: Start Session' to begin.",
+            "It can read the Core codebase, make edits, run commands in the workspace terminal, and explain what it's doing — all in the cloud environment.",
+            "Tip: the more context you give it about your task, the better its output."
           ]
         }
       }
@@ -113,7 +115,7 @@ export const mockTaskDetails = {
   "dev-env-02": {
     taskId: "dev-env-02",
     category: "DEV ENVIRONMENT",
-    title: "Set up OrgFarm extension",
+    title: "Provision your Core workspace",
     status: "PENDING",
     order: 2,
     totalSteps: 3,
@@ -121,50 +123,139 @@ export const mockTaskDetails = {
     steps: [
       {
         stepId: "s1",
-        title: "Install OrgFarm",
+        title: "Provision cloud workspace",
         type: "agent-run",
         status: "ACTIVE",
         description:
-          "The agent will provision an OrgFarm scratch org and connect it to your workspace.",
+          "The agent provisions a Core workspace for you on the Salesforce Workspaces dataplane. The Core repo is mounted in the cloud — nothing is cloned to your machine.",
         agentScript: [
-          { text: "$ sf org create scratch --definition-file config/project-scratch-def.json", kind: "command", pause: 500, activity: { message: "Requesting OrgFarm scratch org…", status: "in_progress" } },
-          { text: "Contacting OrgFarm provisioning service…", kind: "info", pause: 700 },
-          { text: "Creating scratch org (this can take ~30s)…", kind: "info", pause: 900 },
-          { text: "✓ Scratch org created: platform-cloud-sarah-c", kind: "success", pause: 500, activity: { message: "OrgFarm scratch org provisioned", status: "complete" } },
-          { text: "$ sf org open", kind: "command", pause: 400 },
-          { text: "✓ Org connected to workspace", kind: "success", pause: 300, activity: { message: "OrgFarm connected to workspace", status: "complete" } }
+          { text: "→ POST sfw-console/api/workspaces { template: 'core-public/core' }", kind: "command", pause: 600, activity: { message: "Requesting Core workspace…", status: "in_progress" } },
+          { text: "Allocating compute on cvw-dataplane (aws-dev2-uswest2)…", kind: "info", pause: 900 },
+          { text: "Mounting /opt/workspace/core-public/core …", kind: "info", pause: 800 },
+          { text: "✓ Core source mounted (no local clone)", kind: "success", pause: 500, activity: { message: "Core repo mounted in cloud workspace", status: "complete" } },
+          { text: "Warming build cache and dependencies…", kind: "info", pause: 900 },
+          { text: "✓ Workspace ready: i-0fab267da14da88bf (port 8000)", kind: "success", pause: 500, activity: { message: "Core workspace provisioned", status: "complete" } },
+          { text: "Registering core.code-workspace …", kind: "info", pause: 500 },
+          { text: "✓ Workspace URL issued", kind: "success", pause: 300, activity: { message: "Browser VS Code URL ready", status: "complete" } }
         ],
-        completeChip: { label: "OrgFarm provisioned", icon: "check" }
+        completeChip: { label: "Core workspace provisioned", icon: "check" }
       },
       {
         stepId: "s2",
-        title: "Connect to org",
+        title: "Attach dev org",
         type: "standard",
         status: "PENDING",
-        description: "Connect OrgFarm to your development org.",
+        description:
+          "The workspace comes pre-attached to a shared Platform Cloud dev org — no scratch-org setup needed.",
         terminalOutput: null,
         statusChip: null
       },
       {
         stepId: "s3",
-        title: "Verify connection",
+        title: "Confirm workspace health",
         type: "standard",
         status: "PENDING",
-        description: "Test the connection to ensure everything is working.",
+        description: "Confirm the workspace is running and reachable before opening it.",
         terminalOutput: null,
         statusChip: null
       }
     ],
     resources: [
       {
-        title: "OrgFarm Setup Guide",
+        title: "Open workspace in browser VS Code",
+        icon: "external-link",
+        content: {
+          heading: "Your Core workspace",
+          body: [
+            "Once provisioned, your workspace opens in a browser-based VS Code served from the Salesforce Workspaces dataplane.",
+            "Workspace: /opt/workspace/core-public/core/core.code-workspace on instance i-0fab267da14da88bf (port 8000).",
+            "You'll open it in the next task. Everything — editor, terminal, build, and Claude Code — runs in the cloud, so it works from any browser."
+          ]
+        }
+      },
+      {
+        title: "Workspaces vs. scratch orgs",
         icon: "book",
         content: {
-          heading: "OrgFarm Setup Guide",
+          heading: "No scratch org setup",
           body: [
-            "OrgFarm provides on-demand Salesforce scratch orgs for development and testing.",
-            "The agent provisions an org scoped to your team and role automatically. Scratch orgs expire after 7 days by default — the agent will re-provision as needed.",
-            "You can manage your active orgs from the OrgFarm panel in VS Code's sidebar."
+            "Salesforce Workspaces provisions a ready-to-use Core environment pre-attached to a shared dev org, replacing the old OrgFarm scratch-org dance for onboarding.",
+            "The agent handles allocation, source mounting, and dependency warm-up automatically.",
+            "If your workspace expires or gets recycled, the agent re-provisions it — you never lose local work because there is no local work."
+          ]
+        }
+      }
+    ]
+  },
+
+  "dev-env-03": {
+    taskId: "dev-env-03",
+    category: "DEV ENVIRONMENT",
+    title: "Open workspace in browser VS Code",
+    status: "PENDING",
+    order: 3,
+    totalSteps: 3,
+    currentStep: 1,
+    steps: [
+      {
+        stepId: "s1",
+        title: "Launch browser VS Code",
+        type: "agent-run",
+        status: "ACTIVE",
+        description:
+          "The agent opens your Core workspace in browser-based VS Code on the dataplane. No download, no clone — it loads straight in your browser.",
+        agentScript: [
+          { text: "→ Resolving workspace endpoint for i-0fab267da14da88bf…", kind: "command", pause: 600, activity: { message: "Resolving workspace endpoint…", status: "in_progress" } },
+          { text: "Connecting to cvw-dataplane-test.aws-dev2-uswest2 (port 8000)…", kind: "info", pause: 800 },
+          { text: "✓ Tunnel established", kind: "success", pause: 500, activity: { message: "Dataplane tunnel established", status: "complete" } },
+          { text: "Loading core.code-workspace …", kind: "info", pause: 700 },
+          { text: "✓ Browser VS Code ready — Claude Code preinstalled", kind: "success", pause: 400, activity: { message: "Browser VS Code opened for Core workspace", status: "complete" } }
+        ],
+        completeChip: { label: "Workspace open in browser VS Code", icon: "check" }
+      },
+      {
+        stepId: "s2",
+        title: "Explore the Core tree",
+        type: "standard",
+        status: "PENDING",
+        description:
+          "Open the Explorer in browser VS Code to see the Core source, mounted from the cloud.",
+        terminalOutput: null,
+        statusChip: null
+      },
+      {
+        stepId: "s3",
+        title: "Start a Claude Code session",
+        type: "standard",
+        status: "PENDING",
+        description:
+          "Run 'Claude: Start Session' from the Command Palette and ask it to orient you in the Core repo.",
+        terminalOutput: null,
+        statusChip: null
+      }
+    ],
+    resources: [
+      {
+        title: "Open my workspace",
+        icon: "external-link",
+        content: {
+          heading: "Launch browser VS Code",
+          body: [
+            "Your workspace opens at the Salesforce Workspaces dataplane URL, with the workspace parameter pointing at /opt/workspace/core-public/core/core.code-workspace.",
+            "The editor, integrated terminal, build tools, and Claude Code all run remotely — your browser is just the window.",
+            "Bookmark the workspace URL so you can jump back in from any machine."
+          ]
+        }
+      },
+      {
+        title: "Browser VS Code tips",
+        icon: "book",
+        content: {
+          heading: "Working in browser VS Code",
+          body: [
+            "It behaves like desktop VS Code: Command Palette (⌘⇧P), integrated terminal (⌃`), extensions, and source control all work.",
+            "Because compute is in the cloud, large Core builds run on dataplane hardware, not your laptop.",
+            "Your session persists — if you close the tab, reopen the workspace URL to pick up where you left off."
           ]
         }
       }
@@ -191,7 +282,7 @@ export const mockTaskDetails = {
           summary: "Deploy access to Platform Cloud dev environment",
           requestedBy: "PILOTForce Agent",
           justification:
-            "Sarah's onboarding requires deploying and running the Core app locally against a shared dev org. This needs the 'Platform Cloud — Developer' permission set.",
+            "Sarah's onboarding requires deploying and running Core from her Salesforce Workspace against the shared dev org. This needs the 'Platform Cloud — Developer' permission set.",
           scope: ["Deploy metadata to dev org", "Run Apex tests", "Read team CI logs"],
           approver: "Manager — Platform Cloud"
         },

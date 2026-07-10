@@ -129,7 +129,7 @@ function App() {
     if (activeTaskId) loadTaskDetail(activeTaskId);
   };
 
-  const nextTaskHint = "Set up OrgFarm extension →";
+  const nextTaskHint = "Provision your Core workspace →";
 
   return (
     <div className="h-screen flex flex-col bg-gray-100">

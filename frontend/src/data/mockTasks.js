@@ -5,7 +5,7 @@ export const mockTasks = {
       tasks: [
         {
           taskId: "dev-env-01",
-          title: "Install VS Code & Claude Code",
+          title: "Authorize Salesforce Workspaces",
           status: "ACTIVE",
           order: 1,
           totalSteps: 4,
@@ -13,7 +13,7 @@ export const mockTasks = {
         },
         {
           taskId: "dev-env-02",
-          title: "Set up OrgFarm extension",
+          title: "Provision your Core workspace",
           status: "PENDING",
           order: 2,
           totalSteps: 3,
@@ -21,7 +21,7 @@ export const mockTasks = {
         },
         {
           taskId: "dev-env-03",
-          title: "Clone the Core repo",
+          title: "Open workspace in browser VS Code",
           status: "PENDING",
           order: 3,
           totalSteps: 3,
@@ -29,7 +29,7 @@ export const mockTasks = {
         },
         {
           taskId: "dev-env-04",
-          title: "Start and run Core app locally",
+          title: "Verify Core build in workspace",
           status: "PENDING",
           order: 4,
           totalSteps: 4,

@@ -7,22 +7,22 @@ export const mockManagerConfig = {
       name: "DEV ENVIRONMENT",
       tasks: [
         {
-          title: "Install VS Code & Claude Code",
+          title: "Authorize Salesforce Workspaces",
           required: true,
           agentCanVerify: true
         },
         {
-          title: "Set up OrgFarm extension",
+          title: "Provision your Core workspace",
           required: true,
           agentCanVerify: true
         },
         {
-          title: "Clone the Core repo",
+          title: "Open workspace in browser VS Code",
           required: true,
           agentCanVerify: true
         },
         {
-          title: "Start and run Core app locally",
+          title: "Verify Core build in workspace",
           required: true,
           agentCanVerify: true
         },
