@@ -10,6 +10,9 @@ dist/
 build/
 .vite/
 
+# Vendored SLDS assets (regenerated from node_modules by scripts/copy-slds.js)
+frontend/public/slds/
+
 # Environment variables
 .env
 .env.local

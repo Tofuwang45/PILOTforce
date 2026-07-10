@@ -47,9 +47,16 @@ export function ManagerView({ userId, onTaskApproved }) {
   return (
     <div className="flex-1 bg-white p-8 overflow-y-auto">
       <div className="max-w-5xl mx-auto space-y-8">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Manager Dashboard</h1>
-          <p className="text-gray-600">Review and approve pending intern requests</p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Manager Dashboard</h1>
+            <p className="text-gray-600">Review and approve pending intern requests</p>
+          </div>
+          <img
+            src="/logos/sf-horiz.svg"
+            alt="Salesforce"
+            style={{ height: 32, width: 'auto' }}
+          />
         </div>
 
         <div className="bg-white border border-gray-200 rounded-lg p-6">

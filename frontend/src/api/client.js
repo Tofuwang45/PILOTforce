@@ -1,115 +1,123 @@
-import { mockUser } from '@/data/mockUser';
-import { mockTasks } from '@/data/mockTasks';
-import { mockTaskDetails } from '@/data/mockTaskDetails';
-import { mockAgentActivity } from '@/data/mockAgentActivity';
-import { mockProgress } from '@/data/mockProgress';
-import { mockManagerConfig } from '@/data/mockManagerConfig';
-import { mockAiLiteracy } from '@/data/mockAiLiteracy';
+// API client for PILOTForce.
+//
+// By default it talks to the in-memory `mockServer`, which behaves like a real
+// backend (latency, HTTP-style logging, persisted mutations) so the demo shows
+// a natural, stateful workflow with nothing to run. Flip USE_LIVE_API to true
+// (or set VITE_USE_LIVE_API=true) to route the same calls at the real Express
+// backend in /backend, which exposes identical routes.
 
+import { mockServer } from './mockServer';
+
+const USE_LIVE_API = import.meta.env?.VITE_USE_LIVE_API === 'true';
 const API_BASE = '/api';
 
-async function fetchWithFallback(url, fallbackData, options = {}) {
-  try {
-    const response = await fetch(url, options);
-    if (!response.ok) {
-      console.warn(`API call failed: ${url}, falling back to mock data`);
-      return fallbackData;
-    }
-    return await response.json();
-  } catch (error) {
-    console.warn(`API call error: ${url}, falling back to mock data`, error);
-    return fallbackData;
-  }
+async function live(path, options) {
+  const res = await fetch(`${API_BASE}${path}`, options);
+  if (!res.ok) throw new Error(`${res.status} ${path}`);
+  return res.json();
 }
 
 export const apiClient = {
-  async getUser(userId) {
-    return fetchWithFallback(`${API_BASE}/user/${userId}`, mockUser);
+  getUser(userId) {
+    return USE_LIVE_API ? live(`/user/${userId}`) : mockServer.getUser(userId);
   },
 
-  async getTasks(userId) {
-    return fetchWithFallback(`${API_BASE}/tasks/${userId}`, mockTasks);
+  getTasks(userId) {
+    return USE_LIVE_API ? live(`/tasks/${userId}`) : mockServer.getTasks(userId);
   },
 
-  async getTaskDetail(userId, taskId) {
-    const fallback = mockTaskDetails[taskId] || {
-      taskId,
-      category: "UNKNOWN",
-      title: taskId,
-      status: "PENDING",
-      order: 0,
-      totalSteps: 1,
-      currentStep: 1,
-      steps: [],
-      resources: []
-    };
-    return fetchWithFallback(`${API_BASE}/tasks/${userId}/${taskId}`, fallback);
+  getTaskDetail(userId, taskId) {
+    return USE_LIVE_API
+      ? live(`/tasks/${userId}/${taskId}`)
+      : mockServer.getTaskDetail(userId, taskId);
   },
 
-  async advanceTask(userId, taskId, stepId) {
-    try {
-      const response = await fetch(`${API_BASE}/tasks/${userId}/${taskId}/advance`, {
+  advanceTask(userId, taskId, stepId) {
+    if (USE_LIVE_API) {
+      return live(`/tasks/${userId}/${taskId}/advance`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ stepId })
       });
-      if (!response.ok) {
-        return { success: false, message: 'API unavailable, using optimistic update' };
-      }
-      return await response.json();
-    } catch (error) {
-      console.warn('API call error: advance task, using optimistic update', error);
-      return { success: false, message: 'API unavailable, using optimistic update' };
     }
+    return mockServer.advanceTask(userId, taskId, stepId);
   },
 
-  async getAgentActivity(userId) {
-    return fetchWithFallback(`${API_BASE}/agent/activity/${userId}`, mockAgentActivity);
+  getAgentActivity(userId) {
+    return USE_LIVE_API
+      ? live(`/agent/activity/${userId}`)
+      : mockServer.getAgentActivity(userId);
   },
 
-  async triggerAgent(taskId, action) {
-    try {
-      const response = await fetch(`${API_BASE}/agent/trigger/${taskId}`, {
+  // Records a live agent event (from the streaming terminal) into the feed.
+  logAgentActivity(message, status) {
+    if (USE_LIVE_API) {
+      return live(`/agent/activity`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, status })
+      });
+    }
+    return mockServer.logAgentActivity(message, status);
+  },
+
+  triggerAgent(taskId, action) {
+    if (USE_LIVE_API) {
+      return live(`/agent/trigger/${taskId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action })
       });
-      if (!response.ok) {
-        return { success: false, message: 'API unavailable' };
-      }
-      return await response.json();
-    } catch (error) {
-      console.warn('API call error: trigger agent', error);
-      return { success: false, message: 'API unavailable' };
     }
+    return mockServer.triggerAgent(taskId, action);
   },
 
-  async getProgress(userId) {
-    return fetchWithFallback(`${API_BASE}/progress/${userId}`, mockProgress);
+  getProgress(userId) {
+    return USE_LIVE_API ? live(`/progress/${userId}`) : mockServer.getProgress(userId);
   },
 
-  async getManagerConfig(teamId) {
-    return fetchWithFallback(`${API_BASE}/manager/config/${teamId}`, mockManagerConfig);
+  getManagerConfig(teamId) {
+    return USE_LIVE_API
+      ? live(`/manager/config/${teamId}`)
+      : mockServer.getManagerConfig(teamId);
   },
 
-  async approveTask(taskId, approved, comment) {
-    try {
-      const response = await fetch(`${API_BASE}/manager/approve/${taskId}`, {
+  approveTask(taskId, approved, comment) {
+    if (USE_LIVE_API) {
+      return live(`/manager/approve/${taskId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ approved, comment })
       });
-      if (!response.ok) {
-        return { success: false, message: 'API unavailable' };
-      }
-      return await response.json();
-    } catch (error) {
-      console.warn('API call error: approve task', error);
-      return { success: false, message: 'API unavailable' };
     }
+    return mockServer.approveTask(taskId, approved, comment);
   },
 
-  async getAiLiteracy(userId) {
-    return fetchWithFallback(`${API_BASE}/ai-literacy/${userId}`, mockAiLiteracy);
+  getAiLiteracy(userId) {
+    return USE_LIVE_API
+      ? live(`/ai-literacy/${userId}`)
+      : mockServer.getAiLiteracy(userId);
+  },
+
+  signDocument(taskId, stepId, signerName) {
+    if (USE_LIVE_API) {
+      return live(`/documents/${taskId}/${stepId}/sign`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ signerName })
+      });
+    }
+    return mockServer.signDocument(taskId, stepId, signerName);
+  },
+
+  requestAccess(taskId, request) {
+    if (USE_LIVE_API) {
+      return live(`/access/request`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ taskId, request })
+      });
+    }
+    return mockServer.requestAccess(taskId, request);
   }
 };

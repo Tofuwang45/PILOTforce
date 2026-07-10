@@ -61,6 +61,11 @@ export function Sidebar({ tasks, progress, activeTaskId, onTaskClick, nextTaskHi
           </div>
         </div>
       )}
+
+      <div className="px-4 py-3 border-t border-gray-200 flex items-center gap-2">
+        <span className="text-[10px] uppercase tracking-wide text-gray-400">Built on</span>
+        <img src="/logos/sf-horiz.svg" alt="Salesforce" style={{ height: 16, width: 'auto' }} />
+      </div>
     </aside>
   );
 }

@@ -3,10 +3,10 @@ import { ResourcesPanel } from '@/components/resources/ResourcesPanel';
 import { StepProgressBar } from '@/components/tasks/StepProgressBar';
 import { StatusChip } from '@/components/tasks/StatusChip';
 
-export function MainContent({ taskDetail, onAdvanceStep }) {
+export function MainContent({ taskDetail, onAdvanceStep, onActivity, onSign }) {
   if (!taskDetail) {
     return (
-      <main className="flex-1 bg-white p-8">
+      <main className="flex-1 p-8" style={{ background: '#f3f3f3' }}>
         <div className="text-center text-gray-500 mt-20">
           Select a task to begin
         </div>
@@ -17,7 +17,7 @@ export function MainContent({ taskDetail, onAdvanceStep }) {
   const currentStep = taskDetail.steps?.[taskDetail.currentStep - 1];
 
   return (
-    <main className="flex-1 bg-white p-8 overflow-y-auto">
+    <main className="flex-1 p-8 overflow-y-auto" style={{ background: '#f3f3f3' }}>
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="flex items-start justify-between">
           <div>
@@ -40,8 +40,12 @@ export function MainContent({ taskDetail, onAdvanceStep }) {
         {currentStep && (
           <CurrentStepCard
             step={currentStep}
+            taskId={taskDetail.taskId}
             onAdvance={() => onAdvanceStep(taskDetail.taskId, currentStep.stepId)}
             isLastStep={taskDetail.currentStep === taskDetail.totalSteps}
+            isApproved={taskDetail.status !== 'AWAITING_APPROVAL'}
+            onActivity={onActivity}
+            onSign={onSign}
           />
         )}
 

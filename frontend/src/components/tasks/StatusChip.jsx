@@ -1,55 +1,26 @@
 import { cn } from '@/utils/cn';
-import { Clock, CheckCircle, Circle, AlertCircle } from 'lucide-react';
 
+// SLDS badge variants for each task status. SLDS ships themed badges
+// (success/warning/inverse); we add light inline color for the states SLDS
+// doesn't theme by default so the Lightning look stays consistent.
 const statusConfig = {
-  ACTIVE: {
-    label: 'Active',
-    color: 'bg-primary text-white',
-    icon: Circle
-  },
-  PENDING: {
-    label: 'Pending',
-    color: 'bg-pending text-white',
-    icon: Circle
-  },
-  COMPLETE: {
-    label: 'Complete',
-    color: 'bg-success text-white',
-    icon: CheckCircle
-  },
-  AWAITING_APPROVAL: {
-    label: 'Awaiting',
-    color: 'bg-warning text-white',
-    icon: Clock
-  },
-  AGENT_RUNNING: {
-    label: 'Agent',
-    color: 'bg-purple-500 text-white',
-    icon: AlertCircle
-  }
+  ACTIVE: { label: 'Active', className: 'slds-badge', style: { background: '#0176d3', color: '#fff' } },
+  PENDING: { label: 'Pending', className: 'slds-badge', style: {} },
+  COMPLETE: { label: 'Complete', className: 'slds-badge slds-theme_success', style: {} },
+  AWAITING_APPROVAL: { label: 'Awaiting', className: 'slds-badge slds-theme_warning', style: {} },
+  AGENT_RUNNING: { label: 'Agent', className: 'slds-badge', style: { background: '#9050e9', color: '#fff' } }
 };
 
 export function StatusChip({ status, compact = false, isActive = false }) {
   const config = statusConfig[status] || statusConfig.PENDING;
-  const Icon = config.icon;
 
-  if (compact) {
-    return (
-      <span className={cn(
-        "text-xs px-2 py-0.5 rounded-full font-medium flex-shrink-0",
-        isActive ? "bg-white/20 text-white" : config.color
-      )}>
-        {config.label}
-      </span>
-    );
+  // Inside the active (blue) sidebar row, use the inverse badge for contrast.
+  if (compact && isActive) {
+    return <span className="slds-badge slds-badge_inverse">{config.label}</span>;
   }
 
   return (
-    <span className={cn(
-      "inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full font-medium",
-      config.color
-    )}>
-      <Icon className="w-3.5 h-3.5" />
+    <span className={cn(config.className, 'slds-truncate')} style={config.style}>
       {config.label}
     </span>
   );

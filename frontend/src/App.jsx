@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Header } from '@/components/layout/Header';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { MainContent } from '@/components/layout/MainContent';
@@ -16,24 +16,16 @@ function App() {
   const [taskDetail, setTaskDetail] = useState(null);
   const [activities, setActivities] = useState(null);
   const [progress, setProgress] = useState(null);
-  const [activityCounter, setActivityCounter] = useState(0);
+  const activityCounter = useRef(0);
 
-  const loadActivities = useCallback(async () => {
-    const activitiesData = await apiClient.getAgentActivity(USER_ID);
-
-    const newActivity = {
-      id: `act-${Date.now()}-${activityCounter}`,
-      timestamp: 'Just now',
-      message: generateRandomActivity(),
-      status: Math.random() > 0.5 ? 'in_progress' : 'complete',
-      dotColor: Math.random() > 0.5 ? 'yellow' : 'green'
-    };
-
-    setActivities(prev => ({
-      activities: [newActivity, ...(prev?.activities || activitiesData.activities).slice(0, 4)]
-    }));
-    setActivityCounter(prev => prev + 1);
-  }, [activityCounter]);
+  // Push a real activity into the feed. Called by agent-run terminals as they
+  // complete each line of work — routes through the server so the feed is a
+  // single source of truth shared with manager actions.
+  const pushActivity = useCallback(async (activity) => {
+    const res = await apiClient.logAgentActivity(activity.message, activity.status);
+    if (res?.activities) setActivities({ activities: res.activities });
+    activityCounter.current += 1;
+  }, []);
 
   const loadTaskDetail = useCallback(async (taskId) => {
     const detail = await apiClient.getTaskDetail(USER_ID, taskId);
@@ -42,12 +34,14 @@ function App() {
 
   useEffect(() => {
     loadInitialData();
-    const activityInterval = setInterval(() => {
-      loadActivities();
-    }, 3000);
-
-    return () => clearInterval(activityInterval);
-  }, [loadActivities]);
+    // Poll the activity feed so events raised elsewhere (e.g. a manager
+    // approval) surface on the intern dashboard without a manual refresh.
+    const interval = setInterval(async () => {
+      const data = await apiClient.getAgentActivity(USER_ID);
+      setActivities(data);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (activeTaskId) {
@@ -72,19 +66,6 @@ function App() {
     if (firstTask) {
       setActiveTaskId(firstTask.taskId);
     }
-  };
-
-  const generateRandomActivity = () => {
-    const messages = [
-      'Checking system requirements...',
-      'Validating configuration files...',
-      'Syncing with repository...',
-      'Verifying access permissions...',
-      'Running automated tests...',
-      'Agent monitoring progress...',
-      'Checking dependencies...'
-    ];
-    return messages[Math.floor(Math.random() * messages.length)];
   };
 
   const handleAdvanceStep = async (taskId, stepId) => {
@@ -119,6 +100,13 @@ function App() {
     }
   };
 
+  const handleSignDocument = async (taskId, stepId, signerName) => {
+    const res = await apiClient.signDocument(taskId, stepId, signerName);
+    const data = await apiClient.getAgentActivity(USER_ID);
+    setActivities(data);
+    return res;
+  };
+
   const findNextTask = (currentTaskId) => {
     if (!tasks?.categories) return null;
 
@@ -135,8 +123,10 @@ function App() {
     setViewMode(prev => prev === 'intern' ? 'manager' : 'intern');
   };
 
-  const handleTaskApproved = () => {
-    loadInitialData();
+  const handleTaskApproved = async () => {
+    await loadInitialData();
+    // Refresh the open task so an approved item shows unblocked on return.
+    if (activeTaskId) loadTaskDetail(activeTaskId);
   };
 
   const nextTaskHint = "Set up OrgFarm extension →";
@@ -160,6 +150,8 @@ function App() {
             <MainContent
               taskDetail={taskDetail}
               onAdvanceStep={handleAdvanceStep}
+              onActivity={pushActivity}
+              onSign={handleSignDocument}
             />
             <RightSidebar
               activities={activities}

@@ -18,4 +18,11 @@ module.exports = {
       { allowConstantExport: true },
     ],
   },
+  overrides: [
+    {
+      // Build/tooling scripts run under Node, not the browser.
+      files: ['scripts/**/*.js', 'vite.config.js'],
+      env: { node: true, browser: false },
+    },
+  ],
 }
